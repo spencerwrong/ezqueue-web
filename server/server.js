@@ -22,6 +22,9 @@ db.connect(err => {
   console.log("MySQL AWS Connected...");
 });
 
+// Init middleware
+app.use(express.json({ extended: false }));
+
 // api routes
 app.use("/api/users", require("./routes/api/users"));
 
