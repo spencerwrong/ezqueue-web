@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 const { check, validationResult } = require("express-validator");
 
 // @route   GET api/users
@@ -12,12 +13,15 @@ router.get("/", (req, res) => res.send("User Route"));
 // @desc    Test route
 // @access  Public
 router.get("/test", (req, res) => {
-  let sql = "SELECT * FROM test";
+  let pass;
+  let sql = "SELECT * FROM users WHERE email='mark.lmao@notsjsu.edu'";
   db.query(sql, (err, result) => {
     if (err) throw err;
-    console.log(result);
+    pass = result[0].password;
+    // console.log(result[0].password);
     res.send(result);
   });
+  console.log(pass);
 });
 
 // @route   Post api/users
@@ -50,7 +54,9 @@ router.post(
       db.query(sql, (err, results) => {
         if (err) throw err;
         if (results.length) {
-          res.send(400).json({ errors: [{ msg: "User already exists" }] });
+          return res
+            .status(400)
+            .json({ errors: [{ msg: "User already exists" }] });
         }
       });
 
@@ -65,13 +71,27 @@ router.post(
         if (err) throw err;
         res.send("User registered");
       });
+
       // return jsonwebtoken
+      const payload = {
+        user: {
+          id: email
+        }
+      };
+
+      jwt.sign(
+        payload,
+        process.env.JWT_SECRET,
+        { expiresIn: 360000 },
+        (err, token) => {
+          if (err) throw err;
+          res.json({ token });
+        }
+      );
     } catch (err) {
       console.error(err.message);
       res.status(500).send("server error");
     }
-
-    // console.log(req.body);
   }
 );
 
