@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Dashboard.css";
-import Navbar from "../navbar/Navbar";
 
 class Dashboard extends Component {
   render() {
     return (
       <div>
-        <Navbar />
         <div className="header">
           <div className="container-fluid">
             <div className="header-body">

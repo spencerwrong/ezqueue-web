@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
+import { Link } from "react-router-dom";
 
 class Navbar extends Component {
   constructor(props) {
@@ -25,7 +25,17 @@ class Navbar extends Component {
                 placeholder="Search"
               />
             </div>
+            <button className="btn btn-outline-primary mr-1" type="submit">
+              Search
+            </button>
           </form>
+
+          <button className="btn btn-link ml-auto">
+            <Link to="/signup">Sign Up</Link>
+          </button>
+          <button className="btn btn-link" type="submit">
+            <Link to="/login">Login</Link>
+          </button>
         </div>
       </nav>
     );
