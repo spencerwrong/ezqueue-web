@@ -1,0 +1,23 @@
+button.btn-primary {
+  /* color: #fff; */
+  background-color: #fed50a;
+  border-color: #fed50a;
+}
+
+button.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.open > .dropdown-toggle.btn-primary {
+  /* color: #fff; */
+  background-color: #d1af06;
+  border-color: #d1af06; /*set the color you want here*/
+}
+
+button.btn-link {
+  color: black;
+}
+
+h3 {
+  color: #03d3a9;
+}

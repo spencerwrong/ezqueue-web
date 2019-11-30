@@ -1,0 +1,22 @@
+.search-bar {
+  padding-top: 3rem;
+  padding-left: 5rem;
+  padding-right: 5rem;
+  padding-bottom: 3rem;
+}
+
+a.btn-primary {
+  /* color: #fff; */
+  background-color: #03d3a9;
+  border-color: #03d3a9;
+}
+
+a.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.open > .dropdown-toggle.btn-primary {
+  /* color: #fff; */
+  background-color: rgb(3, 177, 142);
+  border-color: rgb(3, 177, 142); /*set the color you want here*/
+}
