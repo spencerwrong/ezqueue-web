@@ -37,7 +37,7 @@ class Landing extends Component {
             </div>
           </form>
         </div>
-        <div class="album py-3 pl-1">
+        <div class="album py-3">
           <div class="container pd-1">
             <div class="row">
               <div class="col-sm-4">

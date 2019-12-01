@@ -1,5 +1,8 @@
 import React, { Component } from "react";
-import axios from "axios";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
+import { register } from "../../actions/authActions";
+import PropTypes from "prop-types";
 
 class Signup extends Component {
   constructor(props) {
@@ -12,6 +15,8 @@ class Signup extends Component {
       password: ""
     };
 
+    // const isAuthenticated = this.props.isAuthenticated;
+
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -22,22 +27,18 @@ class Signup extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log(this.state);
-    // axios
-    //   .post("/api/users", {
-    //     // username: this.state.username,
-    //     first_name: this.state.firstName,
-    //     last_name: this.state.lastName,
-    //     email: this.state.email,
-    //     password: this.state.password
-    //   })
-    //   .then(function(res) {
-    //     console.log(res);
-    //   })
-    //   .catch(function(err) {
-    //     console.log(err);
-    //   });
+    this.props.register({
+      username: this.state.username,
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      email: this.state.email,
+      password: this.state.password
+    });
   }
+
+  // if(this.isAuthenticated) {
+  //   return <Redirect to="/" />;
+  // }
 
   render() {
     return (
@@ -53,7 +54,7 @@ class Signup extends Component {
               placeholder="Enter a unqiue username"
               name="username"
               value={this.state.username}
-              onChange={this.handleChange.bind(this)}
+              onChange={this.handleChange}
               required
             />
           </div>
@@ -65,7 +66,7 @@ class Signup extends Component {
               placeholder="Enter your first name"
               name="firstName"
               value={this.state.firstName}
-              onChange={this.handleChange.bind(this)}
+              onChange={this.handleChange}
               required
             />
           </div>
@@ -105,6 +106,7 @@ class Signup extends Component {
               name="password"
               value={this.state.password}
               onChange={this.handleChange}
+              minLength="6"
               required
             />
           </div>
@@ -119,4 +121,16 @@ class Signup extends Component {
   }
 }
 
-export default Signup;
+Signup.propTypes = {
+  register: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool
+};
+
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(
+  mapStateToProps,
+  { register }
+)(Signup);

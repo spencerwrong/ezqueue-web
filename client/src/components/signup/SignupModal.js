@@ -21,7 +21,10 @@ class SignupModal extends Component {
   render() {
     return (
       <div>
-        <button className="btn btn-link text-dark ml-auto" onClick={this.open}>
+        <button
+          className="btn btn-link text-dark ml-auto font-weight-bold"
+          onClick={this.open}
+        >
           Sign Up
         </button>
         <Modal show={this.state.showModal} onHide={this.close}>

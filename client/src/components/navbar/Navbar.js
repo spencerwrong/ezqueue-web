@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { FiSearch } from "react-icons/fi";
 import Login from "../login/LoginModal";
 import Signup from "../signup/SignupModal";
 import "./Navbar.css";
@@ -16,7 +17,7 @@ class Navbar extends Component {
 
   render() {
     return (
-      <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+      <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-white shadow-sm">
         <div className="container-fluid">
           {/* form */}
           {/* <form className="form-inline mr-4 d-none d-md-flex"> */}
@@ -34,10 +35,10 @@ class Navbar extends Component {
           </form> */}
           <h3 class="my-0 mr-md-auto font-weight-bold">EZQ</h3>
           <nav class="my-2 my-md-0 mr-md-3">
-            <a class="p-2 text-dark" href="#">
+            <a class="p-2 text-dark font-weight-bold" href="#">
               <Link to="/">Queues</Link>
             </a>
-            <a class="p-2 text-dark" href="#">
+            <a class="p-2 text-dark font-weight-bold" href="#">
               Insights
             </a>
           </nav>

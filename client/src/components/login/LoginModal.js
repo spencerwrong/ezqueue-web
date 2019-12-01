@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Modal, Button } from "react-bootstrap";
-import { Login } from "./Login";
+import Login from "./Login";
 
 class LoginModal extends Component {
   constructor(props) {
@@ -21,7 +21,9 @@ class LoginModal extends Component {
   render() {
     return (
       <div>
-        <Button onClick={this.open}>Login</Button>
+        <Button onClick={this.open} className="font-weight-bold">
+          Login
+        </Button>
 
         <Modal show={this.state.showModal} onHide={this.close}>
           <Modal.Header closeButton />
