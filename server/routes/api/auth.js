@@ -5,16 +5,19 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const { check, validationResult } = require("express-validator");
 
+// load user model
+const User = require("../../models/User");
+
 // @route   GET api/users
 // @desc    Test route
 // @access  Public
-router.get("/", auth, (req, res) => {
+router.get("/", auth, async (req, res) => {
   try {
-    let sql = `SELECT email, first_name, last_name FROM users WHERE email=${req.user.id}`;
-    db.query(sql, (err, results) => {
-      if (err) throw err;
-      res.json(results);
+    const user = await User.findOne({
+      where: { email: req.user.id },
+      attributes: ["email", "username", "fullname"]
     });
+    res.json(user);
   } catch (err) {
     console.log(err.message);
     res.status(500).send("server error");
@@ -39,33 +42,19 @@ router.post(
     let { email, password } = req.body;
 
     try {
-      // see if user exists by email
-      let sql = `SELECT * FROM users WHERE email = '${email}'`;
-      db.query(sql, async (err, results) => {
-        try {
-          if (err) throw err;
-          if (!results.length) {
-            return res
-              .status(400)
-              .json({ errors: [{ msg: "Invalid Credentials" }] });
-          }
-          const isMatch = await bcrypt.compare(password, results[0].password);
+      let user = await User.findOne({ where: { email } });
 
-          if (!isMatch) {
-            return res
-              .status(400)
-              .json({ errors: [{ msg: "Invalid Credentials" }] });
-          }
-        } catch (err) {
-          console.log(err.message);
-        }
-      });
+      if (!user) {
+        return res
+          .status(400)
+          .json({ errors: [{ msg: "Invalid Credentials" }] });
+      }
 
-      //   const isMatch = await bcrypt.compare(password, resPass);
+      const isMatch = await bcrypt.compare(password, user.password);
 
-      //   if (!isMatch) {
-      //     return res.send(400).json({ errors: [{ msg: "Invalid Credentials" }] });
-      //   }
+      if (!isMatch) {
+        return res.status(400).json({ errors: [{ msg: "Invalid Password" }] });
+      }
 
       // return jsonwebtoken
       const payload = {
