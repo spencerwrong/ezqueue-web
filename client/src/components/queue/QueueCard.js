@@ -44,7 +44,10 @@ export class QueueCard extends Component {
             </div>
             <p className="mt-1">3</p>
           </div>
-          <a href="#" className="btn btn-block btn-primary">
+          <a
+            href="#"
+            className="btn btn-block btn-primary font-weight-bold text-light"
+          >
             Join
           </a>
         </div>

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { FiSearch } from "react-icons/fi";
+import { FaAngleDoubleRight } from "react-icons/fa";
 import { QueueCard } from "../queue/QueueCard";
 import "./Landing.css";
 
@@ -14,7 +15,25 @@ class Landing extends Component {
   render() {
     return (
       <div className="landing">
-        <div className="search-bar">
+        <section className="py-6">
+          <div className="container">
+            <div className="row mb-5">
+              <div className="col-md-8">
+                <p className="subtitle text-primary font-weight-bold">
+                  FIND YOUR QUEUES HERE
+                </p>
+                <h2 className="font-weight-bold">My Queues</h2>
+              </div>
+              <div className="col-md-4 d-lg-flex align-items-center justify-content-end">
+                <a href="#!" class="text-muted text-sm font-weight-bold">
+                  See all <FaAngleDoubleRight />
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* <div className="search-bar">
           <form className="rounded shadow-sm mb-4">
             <div className="input-group input-group-lg">
               <div className="input-group-prepend">
@@ -36,7 +55,7 @@ class Landing extends Component {
               </div>
             </div>
           </form>
-        </div>
+        </div> */}
         <div class="album py-3">
           <div class="container pd-1">
             <div class="row">

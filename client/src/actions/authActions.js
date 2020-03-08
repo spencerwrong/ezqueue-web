@@ -5,7 +5,9 @@ import {
   USER_LOADED,
   AUTH_ERROR,
   LOGIN_SUCCESS,
-  LOGIN_FAIL
+  LOGIN_FAIL,
+  LOGOUT,
+  LOGOUT_FAIL
 } from "./actionTypes";
 import setAuthToken from "../utils/setAuthToken";
 
@@ -32,16 +34,14 @@ export const loadUser = () => async dispatch => {
 // Register User
 export const register = ({
   username,
-  firstName,
-  lastName,
+  fullname,
   email,
   password
 }) => async dispatch => {
   try {
     const res = await axios.post("/api/users", {
-      // username: this.state.username,
-      first_name: firstName,
-      last_name: lastName,
+      username: username,
+      fullname: fullname,
       email: email,
       password: password
     });
@@ -82,4 +82,9 @@ export const login = (email, password) => async dispatch => {
       type: LOGIN_FAIL
     });
   }
+};
+
+// Logout
+export const logout = () => dispatch => {
+  dispatch({ type: LOGOUT });
 };

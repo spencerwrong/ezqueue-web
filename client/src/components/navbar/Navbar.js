@@ -1,6 +1,9 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
 import { FiSearch } from "react-icons/fi";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { logout } from "../../actions/authActions";
 import Login from "../login/LoginModal";
 import Signup from "../signup/SignupModal";
 import "./Navbar.css";
@@ -16,38 +19,68 @@ class Navbar extends Component {
   }
 
   render() {
+    let {
+      auth: { isAuthenticated, loading },
+      logout
+    } = this.props;
+
+    const guestLinks = (
+      <div className="navbar-nav">
+        <Signup />
+        <Login />
+      </div>
+    );
+
+    const authLinks = (
+      <nav className="">
+        <a className="p-2 text-dark font-weight-bold" href="#" onClick={logout}>
+          Log Out
+        </a>
+        <a className="p-2 btn btn-primary text-dark font-weight-bold" href="#">
+          Create Queue
+        </a>
+      </nav>
+    );
+
     return (
       <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-white shadow-sm">
         <div className="container-fluid">
-          {/* form */}
-          {/* <form className="form-inline mr-4 d-none d-md-flex"> */}
-          {/* input */}
-          {/* <div className="input-group input-group-flush input-group-merge">
-              <input
-                type="search"
-                className="form-control form-control-prepended dropdown-toggle search"
-                placeholder="Search"
-              />
-            </div>
-            <button className="btn btn-outline-primary mr-1" type="submit">
-              Search
-            </button>
-          </form> */}
-          <h3 class="my-0 mr-md-auto font-weight-bold">EZQ</h3>
-          <nav class="my-2 my-md-0 mr-md-3">
-            <a class="p-2 text-dark font-weight-bold" href="#">
-              <Link to="/">Queues</Link>
-            </a>
-            <a class="p-2 text-dark font-weight-bold" href="#">
-              Insights
-            </a>
-          </nav>
-          <Signup />
-          <Login />
+          {/* <h3 className="my-0 mr-md-auto font-weight-bold">EZQ</h3> */}
+          <a href="" className="navbar-brand pb-0">
+            <h3 className="font-weight-bold">EZQ</h3>
+          </a>
+          <form className="rounded form-inline my-2 my-md-0 mr-md-auto">
+            <input
+              className="form-control font-weight-bold"
+              type="text"
+              placeholder="Search"
+            />
+          </form>
+          <a className="p-2 text-dark font-weight-bold" href="#">
+            <Link to="/">Queues</Link>
+          </a>
+          <a className="p-2 text-dark font-weight-bold" href="#">
+            Insights
+          </a>
+          {!loading && (
+            <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
+          )}
         </div>
       </nav>
     );
   }
 }
 
-export default Navbar;
+Navbar.propTypes = {
+  logout: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(
+  mapStateToProps,
+  { logout }
+)(Navbar);

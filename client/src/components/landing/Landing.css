@@ -1,14 +1,22 @@
-.search-bar {
+/* .search-bar {
   padding-top: 3rem;
   padding-left: 5rem;
   padding-right: 5rem;
   padding-bottom: 3rem;
+} */
+
+section.py-6 {
+  padding-top: 6rem;
+}
+
+p.subtitle.text-primary.font-weight-bold {
+  color: #4e66f8 !important;
 }
 
 a.btn-primary {
   /* color: #fff; */
-  background-color: #03d3a9;
-  border-color: #03d3a9;
+  background-color: #4e66f8 !important;
+  border-color: #4e66f8 !important;
 }
 
 a.btn-primary:hover,
