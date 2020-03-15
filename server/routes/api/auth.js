@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const bcrypt = require("bcryptjs");
+const auth = require("../../middleware/auth");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 const { check, validationResult } = require("express-validator");
 
 // load user model
@@ -10,24 +11,27 @@ const User = require("../../models/User");
 // @route   GET api/users
 // @desc    Test route
 // @access  Public
-router.get("/", (req, res) => res.send("User Route"));
+router.get("/", auth, async (req, res) => {
+  try {
+    const user = await User.findOne({
+      where: { email: req.user.id },
+      attributes: ["email", "username", "fullname"]
+    });
+    res.json(user);
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send("server error");
+  }
+});
 
-// @route   Post api/users
-// @desc    Register User
+// @route   POST api/auth
+// @desc    Authenticate user & get token
 // @access  Public
 router.post(
   "/",
   [
-    check("username", "Username is required")
-      .not()
-      .isEmpty(),
-    check("fullname", "Full name is required")
-      .not()
-      .isEmpty(),
     check("email", "Email is required").isEmail(),
-    check("password", "Password with 6 min characters is required").isLength({
-      min: 6
-    })
+    check("password", "Password is required").exists()
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -35,29 +39,24 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    let { email, username, fullname, password } = req.body;
+    let { email, password } = req.body;
 
     try {
-      // if user already exists
-      const user = await User.findOne({ where: { email } });
+      let user = await User.findOne({ where: { email } });
 
-      if (user) {
+      if (!user) {
         return res
           .status(400)
-          .json({ errors: [{ msg: "User already exists" }] });
+          .json({ errors: [{ msg: "Invalid Credentials" }] });
       }
 
-      // encrypt password
-      const salt = await bcrypt.genSalt(10);
-      password = await bcrypt.hash(password, salt);
+      const isMatch = await bcrypt.compare(password, user.password);
 
-      // create and store new user
-      await User.create({
-        email,
-        username,
-        fullname,
-        password
-      });
+      if (!isMatch) {
+        return res
+          .status(400)
+          .json({ errors: [{ msg: "Invalid Credentials" }] });
+      }
 
       // return jsonwebtoken
       const payload = {
