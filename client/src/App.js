@@ -2,8 +2,7 @@ import React, { Component, Fragment } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 // components
-import Navbar from "./components/navbar/Navbar";
-import Landing from "./components/landing/Landing";
+import Navbar from "./components/layout/Navbar";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
@@ -28,12 +27,11 @@ class App extends Component {
         <Router>
           <Fragment>
             <Navbar />
-            <section className="container" className="bg-light">
+            {/* <section className="container" className="bg-light">
               <Switch>
                 <Route path="/" exact component={Landing} />
-                {/* <Route path="/profile/:id" component={Profile} /> */}
               </Switch>
-            </section>
+            </section> */}
           </Fragment>
         </Router>
       </Provider>
