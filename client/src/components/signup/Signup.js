@@ -9,8 +9,7 @@ class Signup extends Component {
     super(props);
     this.state = {
       username: "",
-      firstName: "",
-      lastName: "",
+      fullname: "",
       email: "",
       password: ""
     };
@@ -29,8 +28,7 @@ class Signup extends Component {
     event.preventDefault();
     this.props.register({
       username: this.state.username,
-      firstName: this.state.firstName,
-      lastName: this.state.lastName,
+      fullname: this.state.fullname,
       email: this.state.email,
       password: this.state.password
     });
@@ -45,7 +43,6 @@ class Signup extends Component {
       <div>
         <h1 className="text-center">Sign Up</h1>
         <form onSubmit={this.handleSubmit}>
-          {/* first name */}
           <div className="form-group">
             <label>Username</label>
             <input
@@ -59,26 +56,13 @@ class Signup extends Component {
             />
           </div>
           <div className="form-group">
-            <label>First Name</label>
+            <label>Full Name</label>
             <input
               type="text"
               className="form-control"
-              placeholder="Enter your first name"
-              name="firstName"
-              value={this.state.firstName}
-              onChange={this.handleChange}
-              required
-            />
-          </div>
-          {/* last name */}
-          <div className="form-group">
-            <label>Last Name</label>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Enter your last name"
-              name="lastName"
-              value={this.state.lastName}
+              placeholder="Enter your full name"
+              name="fullname"
+              value={this.state.fullname}
               onChange={this.handleChange}
               required
             />
@@ -130,7 +114,4 @@ const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated
 });
 
-export default connect(
-  mapStateToProps,
-  { register }
-)(Signup);
+export default connect(mapStateToProps, { register })(Signup);
