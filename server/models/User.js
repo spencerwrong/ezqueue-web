@@ -5,8 +5,7 @@ const User = db.define(
   "user",
   {
     email: {
-      type: Sequelize.STRING,
-      primaryKey: true
+      type: Sequelize.STRING
     },
     username: {
       type: Sequelize.STRING
@@ -19,8 +18,13 @@ const User = db.define(
     }
   },
   {
-    timestamps: false
+    tableName: "users"
   }
+
+  // ,
+  // {
+  //   timestamps: false
+  // }
 );
 
 module.exports = User;
