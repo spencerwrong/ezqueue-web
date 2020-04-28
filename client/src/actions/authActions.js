@@ -71,7 +71,7 @@ export const login = (email, password) => async dispatch => {
 
     dispatch({
       type: LOGIN_SUCCESS,
-      payload: res.data // returns a token
+      payload: res.data // returns the created queue
     });
 
     dispatch(loadUser());

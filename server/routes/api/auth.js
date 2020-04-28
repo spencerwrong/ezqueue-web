@@ -9,13 +9,13 @@ const { check, validationResult } = require("express-validator");
 const User = require("../../models/User");
 
 // @route   GET api/users
-// @desc    Test route
+// @desc    Get User
 // @access  Public
 router.get("/", auth, async (req, res) => {
   try {
     const user = await User.findOne({
       where: { email: req.user.id },
-      attributes: ["email", "username", "fullname"]
+      attributes: ["id", "email", "username", "fullname"],
     });
     res.json(user);
   } catch (err) {
@@ -31,7 +31,7 @@ router.post(
   "/",
   [
     check("email", "Email is required").isEmail(),
-    check("password", "Password is required").exists()
+    check("password", "Password is required").exists(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -61,8 +61,8 @@ router.post(
       // return jsonwebtoken
       const payload = {
         user: {
-          id: email
-        }
+          id: email,
+        },
       };
 
       jwt.sign(

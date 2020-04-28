@@ -29,12 +29,6 @@ class App extends Component {
             <div style={{ background: "#f5f6fa", height: "100vh" }}>
               <Navbar />
             </div>
-
-            {/* <section className="container" className="bg-light">
-              <Switch>
-                <Route path="/" exact component={Landing} />
-              </Switch>
-            </section> */}
           </Fragment>
         </Router>
       </Provider>

@@ -32,7 +32,7 @@ class CreateQueueModal extends Component {
             marginBottom: "20px",
             border: "0",
             fontSize: ".9375rem",
-            height: "calc(1.6em + 1.875rem + 2px)"
+            height: "calc(1.6em + 1.875rem + 2px)",
           }}
           className="d-flex justify-content-between"
           onClick={this.open}
