@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { FiSearch } from "react-icons/fi";
 import { connect } from "react-redux";
@@ -6,6 +7,7 @@ import PropTypes from "prop-types";
 import { logout } from "../../actions/authActions";
 import Login from "../login/LoginModal";
 import Signup from "../signup/SignupModal";
+import { Card } from "react-bootstrap";
 
 class Profile extends Component {
   constructor(props) {
@@ -40,13 +42,15 @@ class Profile extends Component {
 
     return (
       <div>
-        <h4 class="mt-2">Profile</h4>
+        <h2 className="font-bold mt-2">Profile</h2>
         {/* <button type="button" class="btn btn-dark">
           Sign In
         </button>
         <button type="button" class="btn btn-dark">
           Sign Up
         </button> */}
+        <div className=""></div>
+
         {!loading && (
           <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
         )}

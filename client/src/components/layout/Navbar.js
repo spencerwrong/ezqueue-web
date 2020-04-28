@@ -3,6 +3,8 @@ import { Tab, Nav, Col } from "react-bootstrap";
 import Home from "../home/Home";
 import Profile from "../profile/Profile";
 import Queues from "../queue/Queues";
+import { IoMdHome } from "react-icons/io";
+import { FiHome, FiMap, FiUsers, FiUser } from "react-icons/fi";
 
 class Navbar extends Component {
   constructor(props) {
@@ -15,22 +17,31 @@ class Navbar extends Component {
         <Tab.Container id="main-nav-tabs" defaultActiveKey="home">
           {/* Nav Links */}
           <div className="fixed-bottom">
-            <nav className="navbar navbar-light bg-light justify-content-center">
-              <Nav>
-                <Nav.Item>
-                  <Nav.Link eventKey="home">Home</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link eventKey="explore">Explore</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link eventKey="queues">Queues</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link eventKey="profile">Profile</Nav.Link>
-                </Nav.Item>
-              </Nav>
-            </nav>
+            <Nav
+              className="navbar navbar-light justify-content-around"
+              style={{ background: "white" }}
+            >
+              <Nav.Item>
+                <Nav.Link eventKey="home">
+                  <FiHome size={25} />
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="explore">
+                  <FiMap size={25} />
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="queues">
+                  <FiUsers size={25} />
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="profile">
+                  <FiUser size={25} />
+                </Nav.Link>
+              </Nav.Item>
+            </Nav>
           </div>
 
           {/* App Pages */}
