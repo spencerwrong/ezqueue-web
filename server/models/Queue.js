@@ -1,19 +1,19 @@
 const Sequelize = require("sequelize");
 const db = require("../database");
 
-const User = db.define("user", {
-  email: {
+const Queue = db.define("queue", {
+  name: {
     type: Sequelize.STRING
   },
-  username: {
+  userID: {
     type: Sequelize.STRING
   },
-  fullname: {
+  description: {
     type: Sequelize.STRING
   },
-  password: {
+  location: {
     type: Sequelize.STRING
   }
 });
 
-module.exports = User;
+module.exports = Queue;
