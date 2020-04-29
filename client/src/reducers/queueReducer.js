@@ -3,17 +3,20 @@ import {
   START_QUEUE,
   END_QUEUE,
   GET_QUEUES,
-  QUEUE_ERROR
+  QUEUE_ERROR,
 } from "../actions/actionTypes";
 
 const intialState = {
-  queues: [],
+  userQueues: [],
+  activeQueue: [],
+  savedQueues: [],
+  followedQueues: [],
   queue: null,
   loading: true,
-  errors: {}
+  errors: {},
 };
 
-export default function(state = intialState, action) {
+export default function (state = intialState, action) {
   const { type, payload } = action;
 
   switch (type) {
@@ -21,19 +24,21 @@ export default function(state = intialState, action) {
       return {
         ...state,
         queues: payload,
-        loading: false
+        loading: false,
       };
     case QUEUE_ERROR:
       return {
         ...state,
         errors: payload,
-        loading: false
+        loading: false,
       };
     case CREATE_QUEUE:
       return {
         ...state,
-        queues: [...state.queues, payload],
-        loading: false
+        userQueues: [...state.userQueues, payload],
+        loading: false,
       };
+    default:
+      return state;
   }
 }

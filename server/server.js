@@ -14,7 +14,7 @@ const db = require("./database");
 // test db
 db.authenticate()
   .then(() => console.log("MySQL AWS Connected..."))
-  .catch(err => console.log(err));
+  .catch((err) => console.log(err));
 
 // Init middleware
 app.use(express.json({ extended: false }));
@@ -22,6 +22,7 @@ app.use(express.json({ extended: false }));
 // api routes
 app.use("/api/users", require("./routes/api/users"));
 app.use("/api/auth", require("./routes/api/auth"));
+app.use("/api/queue", require("./routes/api/queue"));
 
 const port = process.env.PORT || 5000;
 

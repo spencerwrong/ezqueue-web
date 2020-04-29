@@ -12,14 +12,7 @@ const User = require("../../models/User");
 // @access  Public
 router.post(
   "/create",
-  [
-    auth,
-    [
-      check("name", "Queue name is required")
-        .not()
-        .isEmpty()
-    ]
-  ],
+  [auth, [check("name", "Queue name is required").not().isEmpty()]],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -31,13 +24,15 @@ router.post(
     try {
       // find user by id
       const userID = req.user.id;
-      const user = await User.findOne({ where: { id: userID } });
+      const user = await User.findOne({ where: { email: userID } });
+      const username = user.username;
 
       const queue = await Queue.create({
         name,
         userID,
+        username,
         description,
-        location
+        location,
       });
 
       res.json(queue);
@@ -47,3 +42,5 @@ router.post(
     }
   }
 );
+
+module.exports = router;
