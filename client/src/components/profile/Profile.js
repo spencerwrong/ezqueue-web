@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import { FiSearch } from "react-icons/fi";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -8,6 +8,14 @@ import { logout } from "../../actions/authActions";
 import Login from "../login/LoginModal";
 import Signup from "../signup/SignupModal";
 import { Card } from "react-bootstrap";
+
+import LoginPage from './../Login'
+import AdminDashboard from './../AdminDashboard';
+
+import { Security, SecureRoute, ImplicitCallback } from '@okta/okta-react';
+
+
+
 
 class Profile extends Component {
   constructor(props) {
@@ -39,7 +47,6 @@ class Profile extends Component {
         </a>
       </nav>
     );
-
     return (
       <div>
         <h2 className="font-bold mt-2">Profile</h2>
@@ -54,6 +61,13 @@ class Profile extends Component {
         {!loading && (
           <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
         )}
+
+        <Link to="/">Home</Link>&nbsp;
+        <Link to="/admin">Dashboard</Link>&nbsp;
+        <Route exact path="/" component={LoginPage} />
+        <SecureRoute exact path="/admin" component={AdminDashboard} />
+        <Route path="/implicit/callback" componeent={ImplicitCallback} />
+
       </div>
     );
   }

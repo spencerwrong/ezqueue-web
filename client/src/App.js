@@ -1,5 +1,7 @@
 import React, { Component, Fragment } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import { Security, SecureRoute, ImplicitCallback } from '@okta/okta-react';
+
 
 // components
 import Navbar from "./components/layout/Navbar";
@@ -23,6 +25,9 @@ if (localStorage.token) {
 class App extends Component {
   render() {
     return (
+
+
+
       <Provider store={store}>
         <Router>
           <Fragment>
