@@ -18,8 +18,7 @@ class LoginPage extends React.Component {
   render() {
     return (
       <>
-        <h1>Login page</h1>
-        <button onClick={() => this.props.auth.login()}>sign in</button>
+        <button onClick={() => this.props.auth.login()}>Log in with Okta</button>
       </>
     )
   }

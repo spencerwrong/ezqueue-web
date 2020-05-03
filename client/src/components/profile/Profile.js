@@ -62,8 +62,8 @@ class Profile extends Component {
           <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
         )}
 
-        <Link to="/">Home</Link>&nbsp;
-        <Link to="/admin">Dashboard</Link>&nbsp;
+        {/* <Link to="/">Home</Link>&nbsp;
+        <Link to="/admin">Dashboard</Link>&nbsp; */}
         <Route exact path="/" component={LoginPage} />
         <SecureRoute exact path="/admin" component={AdminDashboard} />
         <Route path="/implicit/callback" componeent={ImplicitCallback} />

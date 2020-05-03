@@ -3,6 +3,7 @@ import { Tab, Nav, Col } from "react-bootstrap";
 import Home from "../home/Home";
 import Profile from "../profile/Profile";
 import Queues from "../queue/Queues";
+import Explore from "../explore/Explore";
 import { IoMdHome } from "react-icons/io";
 import { FiHome, FiMap, FiUsers, FiUser } from "react-icons/fi";
 
@@ -51,7 +52,7 @@ class Navbar extends Component {
                 <Home />
               </Tab.Pane>
               <Tab.Pane eventKey="explore">
-                <h1>Explore</h1>
+                <Explore />
               </Tab.Pane>
               <Tab.Pane eventKey="queues">
                 <Queues />
