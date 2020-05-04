@@ -6,8 +6,9 @@ import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import { Security, SecureRoute, ImplicitCallback } from '@okta/okta-react';
 
 const mapStyles = {
-  width: '100%',
-  height: '100%',
+  width: '80%',
+  height: '80%',
+  margin: 'auto'
 };
 
 export class MapContainer extends Component {
@@ -15,9 +16,9 @@ export class MapContainer extends Component {
     super(props);
 
     this.state = {
-      queues: [{ lat: 37.3366067, lng: -121.8832416 },
-        { lat: 37.3369232, lng: -121.8817353 },
-        { lat: 37.3346139, lng: -121.8816275 }]
+      queues: [{ latitude: 37.3366067, longitude: -121.8832416 },
+        { latitude: 37.3369232, longitude: -121.8817353 },
+        { latitude: 37.3346139, longitude: -121.8816275 }]
     }
   }
 
@@ -33,11 +34,11 @@ export class MapContainer extends Component {
 
   render() {
     return (
-      <div>
-        <div style={{width:'100vw', height:'10vh'}}>
-          <h1>Explore</h1>
+      <div style={{ width: '100vw', height: '90vh' }}>
+        <div>
+          <h1>Explore</h1> 
         </div> 
-        <div style={{width: '100vw', height:'80vh'}}>
+        <div>
           <Map
             google={this.props.google}
             zoom={16}
