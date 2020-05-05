@@ -1,6 +1,6 @@
 // Standard card just means the cards that will appear the most
 import React, { useState, useEffect, Fragment } from "react";
-import { Card, Button } from "react-bootstrap";
+import { Card, Button, Modal } from "react-bootstrap";
 import { FiUsers, FiMoreHorizontal, FiMapPin } from "react-icons/fi";
 import { connect } from "react-redux";
 import styled from "styled-components";
@@ -18,6 +18,7 @@ const QueueCard = (props) => {
   const [isHost, setHostState] = useState(props.isHost);
   const [count, setCount] = useState(0);
   const [buttonState, setButtonState] = useState({ text: "", color: "" });
+  const [showModal, setModalState] = useState(false);
 
   // check if queue is active
   useEffect(() => {
@@ -60,7 +61,7 @@ const QueueCard = (props) => {
       start();
     } else if (isActive && isOccupant) {
       leave();
-    } else {
+    } else if (isActive && !isOccupant) {
       join();
     }
   };
@@ -85,24 +86,94 @@ const QueueCard = (props) => {
     socket.emit("leave", { queueID: queue.id, username: currentUser });
   };
 
-  return (
-    <Card
-      style={{
-        marginBottom: "20px",
-        border: 0,
-      }}
-    >
-      <Card.Body>
-        <div className="d-flex justify-content-between">
-          <h4 style={{ paddingBottom: "1px", fontWeight: "500" }}>{name}</h4>
-          <FiMoreHorizontal size={25} />
-        </div>
+  const close = () => {
+    setModalState(false);
+  };
 
-        <div className="d-flex text-muted" style={{ paddingBottom: "15px" }}>
-          <FiMapPin />
-          <small style={{ marginLeft: "5px" }}>{location}</small>
-        </div>
-        <div className="d-flex justify-content-between">
+  const open = () => {
+    setModalState(true);
+  };
+
+  const checkin = () => {};
+
+  const checkInButton = (
+    <Button
+      variant="secondary"
+      size="lg"
+      style={{ fontWeight: "bold" }}
+      onClick={click}
+      block
+    >
+      Chcek In User
+    </Button>
+  );
+
+  return (
+    <div>
+      <Card
+        style={{
+          marginBottom: "20px",
+          border: 0,
+        }}
+      >
+        <Card.Body>
+          <div onClick={open}>
+            <div className="d-flex justify-content-between">
+              <h4 style={{ paddingBottom: "1px", fontWeight: "500" }}>
+                {name}
+              </h4>
+              <FiMoreHorizontal size={25} />
+            </div>
+
+            <div
+              className="d-flex text-muted"
+              style={{ paddingBottom: "15px" }}
+            >
+              <FiMapPin />
+              <small style={{ marginLeft: "5px" }}>{location}</small>
+            </div>
+          </div>
+
+          <div className="d-flex justify-content-between">
+            <div className="host-container d-flex">
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRXHUzSweS0rn2IJYSRYlh07ZfaBbg8o_mx_ljxCRxF5NQhNo1j&usqp=CAU"
+                alt=""
+                style={{
+                  verticalAlign: "middle",
+                  width: "40px",
+                  height: "40px",
+                  borderRadius: "50%",
+                  marginRight: "15px",
+                }}
+              />
+              <div className="align-self-center" style={{ paddingTop: "2px" }}>
+                {/* <h6 className="mb-0" style={{ fontSize: "small" }}>
+                Anna Bridges
+              </h6> */}
+                <small className="text-muted">@{username}</small>
+              </div>
+            </div>
+
+            <div style={{ paddingTop: "5px" }}>
+              {count}
+              <OccupantIcon size={20} />
+              {/* <Fragment>{isHost ? hostButton : guestButton}</Fragment> */}
+              <Button
+                variant={buttonState.color}
+                size="sm"
+                style={{ marginLeft: "10px", fontWeight: "bold" }}
+                onClick={click}
+              >
+                {buttonState.text}
+              </Button>
+            </div>
+          </div>
+        </Card.Body>
+      </Card>
+
+      <Modal show={showModal} onHide={close}>
+        <Modal.Header closeButton>
           <div className="host-container d-flex">
             <img
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRXHUzSweS0rn2IJYSRYlh07ZfaBbg8o_mx_ljxCRxF5NQhNo1j&usqp=CAU"
@@ -115,30 +186,34 @@ const QueueCard = (props) => {
                 marginRight: "15px",
               }}
             />
-            <div className="align-self-center" style={{ paddingTop: "2px" }}>
-              {/* <h6 className="mb-0" style={{ fontSize: "small" }}>
-                Anna Bridges
-              </h6> */}
-              <small className="text-muted">@{username}</small>
+            <div className="align-self-center" style={{ paddingTop: "4px" }}>
+              <h5 className="font-weight-bold">@{username}</h5>
             </div>
           </div>
+        </Modal.Header>
+        <Modal.Body>
+          <h2 style={{ fontWeight: "bold", marginBottom: "20px" }}>{name}</h2>
+          <h5 className="text-muted">Location</h5>
+          <p className="font-weight-bold">{location}</p>
 
-          <div style={{ paddingTop: "5px" }}>
-            {count}
-            <OccupantIcon size={20} />
-            {/* <Fragment>{isHost ? hostButton : guestButton}</Fragment> */}
-            <Button
-              variant={buttonState.color}
-              size="sm"
-              style={{ marginLeft: "10px", fontWeight: "bold" }}
-              onClick={click}
-            >
-              {buttonState.text}
-            </Button>
-          </div>
-        </div>
-      </Card.Body>
-    </Card>
+          <h5 className="text-muted">Description</h5>
+          <p className="font-weight-bold">{queue.description}</p>
+          <hr />
+          <Fragment>{isHost && isActive ? checkInButton : null}</Fragment>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant={buttonState.color}
+            size="lg"
+            style={{ fontWeight: "bold" }}
+            onClick={checkin}
+            block
+          >
+            {buttonState.text}
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </div>
   );
 };
 
