@@ -6,7 +6,11 @@ import {
   END_QUEUE,
   GET_QUEUES,
   QUEUE_ERROR,
+  FETCH_USER_QUEUES,
+  ADD_ACTIVE_QUEUE,
+  JOIN_QUEUE,
 } from "./actionTypes";
+import { Redirect } from "react-router-dom";
 
 // Get Queues
 export const getActive = () => async (dispatch) => {
@@ -33,10 +37,37 @@ export const create = ({ name, description, location }) => async (dispatch) => {
       description: description,
       location: location,
     });
-
+    const info = {
+      active: false,
+      count: 0,
+    };
+    const queue = { ...res.data, ...info };
     dispatch({
       type: CREATE_QUEUE,
-      payload: res.data, // returns the queue
+      payload: queue, // returns the queue
+    });
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    console.log(errors);
+
+    dispatch({
+      type: QUEUE_ERROR,
+    });
+  }
+};
+
+// Update a Queue
+export const update = ({ queue }) => async (dispatch) => {};
+
+// Fetch logged in user's queues
+export const fetchUserQueues = () => async (dispatch) => {
+  try {
+    const res = await axios.get("/api/queue/user");
+
+    dispatch({
+      type: FETCH_USER_QUEUES,
+      payload: res.data,
     });
   } catch (err) {
     const errors = err.response.data.errors;

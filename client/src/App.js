@@ -6,6 +6,7 @@ import { Security, SecureRoute, ImplicitCallback } from '@okta/okta-react';
 // components
 import Navbar from "./components/layout/Navbar";
 
+// CSS
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 

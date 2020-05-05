@@ -9,58 +9,80 @@ import {
   Container,
   InputGroup,
   FormControl,
-  Card
+  Card,
 } from "react-bootstrap";
 import styled from "styled-components";
-import { FiSearch, FiUsers } from "react-icons/fi";
+import { FiSearch } from "react-icons/fi";
+import { connect } from "react-redux";
 import CreateQueueModal from "./CreateQueueModal";
+import QueueCard from "./QueueCard";
 
-class Queues extends Component {
-  render() {
-    return (
-      <Container fluid style={{ padding: "10px" }}>
-        <PageTitle style={{ marginTop: "20px", marginBottom: "25px" }}>
-          Queues
-        </PageTitle>
+const Queues = ({ userQueues }) => {
+  const queueCards = userQueues.map((queue) => (
+    <QueueCard
+      name={queue.name}
+      username={queue.username}
+      title={queue.title}
+      location={queue.location}
+      queue={queue}
+      isHost={true}
+    />
+  ));
 
-        {/* Search Bar */}
-        <InputGroup
+  return (
+    <Container fluid style={{ padding: "10px" }}>
+      <PageTitle style={{ marginTop: "20px", marginBottom: "25px" }}>
+        Queues
+      </PageTitle>
+
+      {/* Search Bar */}
+      <InputGroup
+        style={{
+          backgroundColor: "#EDEEF6",
+          marginBottom: "20px",
+          borderRadius: "10px 5px 5px 10px",
+        }}
+      >
+        <FormControl
+          placeholder="Search for your queues..."
           style={{
             backgroundColor: "#EDEEF6",
-            marginBottom: "20px",
-            borderRadius: "10px 5px 5px 10px"
+            border: 0,
+            height: "calc(1.6em + 1.875rem + 2px)",
+            // color: "#A6A8AE",
+            paddingLeft: "20px",
           }}
-        >
-          <FormControl
-            placeholder="Search for active or past queues..."
+        />
+        <InputGroup.Append>
+          <Button
             style={{
-              backgroundColor: "#EDEEF6",
-              border: 0,
-              height: "calc(1.6em + 1.875rem + 2px)",
-              // color: "#A6A8AE",
-              paddingLeft: "20px"
+              paddingRight: "20px",
+              backgroundColor: "transparent",
+              border: "0",
             }}
-          />
-          <InputGroup.Append>
-            <Button
-              style={{
-                paddingRight: "20px",
-                backgroundColor: "transparent",
-                border: "0"
-              }}
-            >
-              <div style={{ color: "#A6A8AE" }}>
-                <FiSearch size={20} />
-              </div>
-            </Button>
-          </InputGroup.Append>
-        </InputGroup>
+          >
+            <div style={{ color: "#A6A8AE" }}>
+              <FiSearch size={20} />
+            </div>
+          </Button>
+        </InputGroup.Append>
+      </InputGroup>
 
-        {/* Create Queue Button and Modal */}
-        <CreateQueueModal />
+      {/* Create Queue Button and Modal */}
+      <CreateQueueModal />
+      <Container
+        style={{
+          height: "500px",
+          overflowY: "scroll",
+          width: "100%",
+          padding: 0,
+        }}
+      >
+        {queueCards}
+      </Container>
 
-        {/* Queue Display */}
-        <Tab.Container id="queue-tabs" defaultActiveKey="active">
+      {/* Queue Display */}
+      {/* <Tab.Container id="queue-tabs" defaultActiveKey="active">
           <QueueTabs>
             <Nav justify variant="pills">
               <Nav.Item>
@@ -81,14 +103,7 @@ class Queues extends Component {
               </Nav.Item>
             </Nav>
 
-            {/* <Nav justify variant="pills">
-              <QueueNavItem>
-                <Nav.Link eventKey="active">Active</Nav.Link>
-              </QueueNavItem>
-              <QueueNavItem>
-                <Nav.Link eventKey="inactive">Inactive</Nav.Link>
-              </QueueNavItem>
-            </Nav> */}
+            
           </QueueTabs>
 
           <Col style={{ padding: 0 }}>
@@ -97,46 +112,17 @@ class Queues extends Component {
                 eventKey="active"
                 style={{ height: "450px", overflowY: "scroll", width: "100%" }}
               >
-                <TestCard />
-                <TestCard />
-                <TestCard />
-                <TestCard />
-                <TestCard />
+                <QueueCard />
+                <QueueCard />
+                <QueueCard />
+                <QueueCard />
+                <QueueCard />
               </Tab.Pane>
               <Tab.Pane eventKey="inactive">empty</Tab.Pane>
             </Tab.Content>
           </Col>
-        </Tab.Container>
-      </Container>
-    );
-  }
-}
-
-const TestCard = () => {
-  return (
-    <div>
-      <Card style={{ marginTop: "20px", border: 0 }}>
-        <Card.Body>
-          <div className="d-flex">
-            <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRXHUzSweS0rn2IJYSRYlh07ZfaBbg8o_mx_ljxCRxF5NQhNo1j&usqp=CAU"
-              alt=""
-              style={{
-                verticalAlign: "middle",
-                width: "50px",
-                height: "50px",
-                borderRadius: "50%",
-                marginRight: "15px"
-              }}
-            />
-            <div className="align-self-center">
-              <h6 className="mb-0">Anna Bridges</h6>
-              <small className="text-muted">Online</small>
-            </div>
-          </div>
-        </Card.Body>
-      </Card>
-    </div>
+        </Tab.Container> */}
+    </Container>
   );
 };
 
@@ -164,19 +150,9 @@ const QueueNavItem = styled(Nav.Item)`
   }
 `;
 
-// const Wrapper = styled.div`
-// background-color: #fff;
-// `;
+const mapStateToProps = (state) => ({
+  userQueues: state.queue.userQueues,
+});
 
-// const QueueCard = styled(Card)`
-
-// `
-
-const Avatar = styled.img`
-  vertical-align: middle;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-`;
-
-export default Queues;
+export default connect(mapStateToProps, null)(Queues);
+// export default Queues;

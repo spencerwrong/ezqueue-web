@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Fragment } from "react";
 import styled from "styled-components";
 import {
   Card,
@@ -6,75 +6,70 @@ import {
   ProgressBar,
   Container,
   InputGroup,
-  FormControl
+  FormControl,
+  Row,
 } from "react-bootstrap";
 import { FiSearch } from "react-icons/fi";
+import ActiveCard from "../queue/ActiveCard";
+// import QueueCard from "../queue/QueueCard";
+import { fetchUserQueues } from "../../actions/queueActions";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
-class Home extends Component {
-  constructor(props) {
-    super(props);
+const Home = ({ fetchUserQueues, isAuthenticated }) => {
+  if (isAuthenticated) {
+    // fetch logged in user's queues
+    fetchUserQueues();
   }
 
-  render() {
-    return (
-      <Container fluid style={{ padding: "10px" }}>
-        <PageTitle style={{ marginTop: "20px", marginBottom: "25px" }}>
-          Home
-        </PageTitle>
+  return (
+    <Container fluid style={{ padding: "10px" }}>
+      <PageTitle style={{ marginTop: "20px", marginBottom: "25px" }}>
+        Home
+      </PageTitle>
 
-        {/* Search Bar */}
-        <InputGroup
+      {/* Search Bar */}
+      <InputGroup
+        style={{
+          backgroundColor: "#EDEEF6",
+          marginBottom: "20px",
+          borderRadius: "10px 5px 5px 10px",
+        }}
+      >
+        <FormControl
+          placeholder="Search for queues or users..."
           style={{
             backgroundColor: "#EDEEF6",
-            marginBottom: "20px",
-            borderRadius: "10px 5px 5px 10px"
+            border: 0,
+            height: "calc(1.6em + 1.875rem + 2px)",
+            paddingLeft: "20px",
           }}
-        >
-          <FormControl
-            placeholder="Search for queues or users..."
+        />
+        <InputGroup.Append>
+          <Button
             style={{
-              backgroundColor: "#EDEEF6",
-              border: 0,
-              height: "calc(1.6em + 1.875rem + 2px)",
-              paddingLeft: "20px"
+              paddingRight: "20px",
+              backgroundColor: "transparent",
+              border: "0",
             }}
-          />
-          <InputGroup.Append>
-            <Button
-              style={{
-                paddingRight: "20px",
-                backgroundColor: "transparent",
-                border: "0"
-              }}
-            >
-              <div style={{ color: "#A6A8AE" }}>
-                <FiSearch size={20} />
-              </div>
-            </Button>
-          </InputGroup.Append>
-        </InputGroup>
+          >
+            <div style={{ color: "#A6A8AE" }}>
+              <FiSearch size={20} />
+            </div>
+          </Button>
+        </InputGroup.Append>
+      </InputGroup>
 
-        <SectionTitle>Active</SectionTitle>
-        <Card>
-          <Card.Header>Featured</Card.Header>
-          <Card.Body>
-            <Card.Title>Office Hours</Card.Title>
-            <ProgressBar now={60} label={"6 of 10"} variant="success" />
-          </Card.Body>
-        </Card>
-        <SectionTitle>Following</SectionTitle>
-        <Card>
-          <Card.Header>John Stockton</Card.Header>
-          <Card.Body>
-            <Card.Title>Office Hours</Card.Title>
-            <Card.Text>San Jose, CA</Card.Text>
-            <Button variant="dark">Join</Button>
-          </Card.Body>
-        </Card>
-      </Container>
-    );
-  }
-}
+      <SectionTitle>Active</SectionTitle>
+      <ActiveCard />
+      <SectionTitle style={{ marginTop: "20px", marginBottom: "20px" }}>
+        Following
+      </SectionTitle>
+
+      {/* <Queue /> */}
+    </Container>
+  );
+};
 
 const PageTitle = styled.h2`
   margin-top: 6;
@@ -88,4 +83,11 @@ const SectionTitle = styled.h3`
   font-weight: bold;
 `;
 
-export default Home;
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+  // user queues
+});
+
+// export default Home;
+
+export default connect(mapStateToProps, { fetchUserQueues })(Home);

@@ -17,3 +17,6 @@ export const CREATE_START_QUEUE = "CREATE_START_QUEUE";
 export const END_QUEUE = "END_QUEUE";
 export const GET_QUEUES = "GET_QUEUES";
 export const QUEUE_ERROR = "QUEUE_ERROR";
+export const FETCH_USER_QUEUES = "FETCH_USER_QUEUES";
+export const ADD_ACTIVE_QUEUE = "ADD_ACTIVE_QUEUE";
+export const JOIN_QUEUE = "JOIN_QUEUE";
