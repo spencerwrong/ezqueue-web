@@ -2,6 +2,10 @@ import { Map, GoogleApiWrapper, Marker} from 'google-maps-react';
 import React, { Component, Fragment } from "react";
 import styled from "styled-components";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import { Modal, Button } from "react-bootstrap";
+import MarkerModal from "./MarkerModal";
+import DummyQueue from "./DummyQueue"
+
 
 import { Security, SecureRoute, ImplicitCallback } from '@okta/okta-react';
 
@@ -18,8 +22,21 @@ export class MapContainer extends Component {
     this.state = {
       queues: [{ latitude: 37.3366067, longitude: -121.8832416 },
         { latitude: 37.3369232, longitude: -121.8817353 },
-        { latitude: 37.3346139, longitude: -121.8816275 }]
+        { latitude: 37.3346139, longitude: -121.8816275 },
+        { latitude: 38.8977, longitude: -77.0365 }],
+      showModal: false
     }
+    this.open = this.open.bind(this);
+    this.close = this.close.bind(this);
+
+  }
+
+  close() {
+    this.setState({ showModal: false });
+  }
+
+  open() {
+    this.setState({ showModal: true });
   }
 
   displayMarkers = () => {
@@ -28,7 +45,7 @@ export class MapContainer extends Component {
         lat: store.latitude,
         lng: store.longitude
       }}
-        onClick={() => console.log("Office")} />
+        onClick={this.open} />
     })
   }
 
@@ -39,6 +56,25 @@ export class MapContainer extends Component {
           <h1>Explore</h1> 
         </div> 
         <div>
+          {/* <MarkerModal /> */}
+
+          <Modal show={this.state.showModal} onHide={this.close}>
+            <Modal.Header closeButton />
+            <Modal.Body>
+              <h1>
+                <DummyQueue />
+              </h1>
+            </Modal.Body>
+            <Modal.Footer>
+              <button className="btn btn-secondary" onClick={this.close}>
+                Cancel
+            </button>
+            </Modal.Footer>
+          </Modal>
+
+
+        </div>
+        <div>
           <Map
             google={this.props.google}
             zoom={16}
@@ -48,7 +84,10 @@ export class MapContainer extends Component {
             {this.displayMarkers()}
           </Map>
         </div>
+
       </div>
+
+      
     );
   }
 }
