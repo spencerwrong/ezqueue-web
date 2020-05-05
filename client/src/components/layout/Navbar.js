@@ -1,10 +1,12 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { Tab, Nav, Col } from "react-bootstrap";
 import Home from "../home/Home";
 import Profile from "../profile/Profile";
 import Queues from "../queue/Queues";
-import { IoMdHome } from "react-icons/io";
+import Login from "../login/LoginModal";
+import Signup from "../signup/SignupModal";
 import { FiHome, FiMap, FiUsers, FiUser } from "react-icons/fi";
+import { connect } from "react-redux";
 
 class Navbar extends Component {
   constructor(props) {
@@ -12,6 +14,19 @@ class Navbar extends Component {
   }
 
   render() {
+    let {
+      auth: { isAuthenticated, loading },
+    } = this.props;
+
+    const authLinks = <Queues />;
+
+    const guestLinks = (
+      <div>
+        <Signup />
+        <Login />
+      </div>
+    );
+
     return (
       <div>
         <Tab.Container id="main-nav-tabs" defaultActiveKey="home">
@@ -54,7 +69,12 @@ class Navbar extends Component {
                 <h1>Explore</h1>
               </Tab.Pane>
               <Tab.Pane eventKey="queues">
-                <Queues />
+                {!loading && (
+                  <Fragment>
+                    {isAuthenticated ? authLinks : guestLinks}
+                  </Fragment>
+                )}
+                {/* <Queues /> */}
               </Tab.Pane>
               <Tab.Pane eventKey="profile">
                 <Profile />
@@ -67,4 +87,8 @@ class Navbar extends Component {
   }
 }
 
-export default Navbar;
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, null)(Navbar);

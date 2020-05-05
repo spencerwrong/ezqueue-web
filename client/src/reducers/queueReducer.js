@@ -4,6 +4,7 @@ import {
   END_QUEUE,
   GET_QUEUES,
   QUEUE_ERROR,
+  FETCH_USER_QUEUES,
 } from "../actions/actionTypes";
 
 const intialState = {
@@ -36,6 +37,12 @@ export default function (state = intialState, action) {
       return {
         ...state,
         userQueues: [...state.userQueues, payload],
+        loading: false,
+      };
+    case FETCH_USER_QUEUES:
+      return {
+        ...state,
+        userQueues: payload,
         loading: false,
       };
     default:
