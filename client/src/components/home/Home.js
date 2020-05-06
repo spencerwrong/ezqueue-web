@@ -7,10 +7,17 @@ import { getFollowed } from "../../actions/queueActions";
 import { connect } from "react-redux";
 import SearchBar from "../search/SearchBar";
 import QueueCard from "../queue/QueueCard";
+import { fetchUserQueues } from "../../actions/queueActions";
 
-const Home = ({ isAuthenticated, getFollowed, followedQueues }) => {
+const Home = ({
+  isAuthenticated,
+  getFollowed,
+  followedQueues,
+  fetchUserQueues,
+}) => {
   useEffect(() => {
     if (isAuthenticated) {
+      fetchUserQueues();
       getFollowed();
     }
   }, []);
@@ -69,4 +76,4 @@ const mapStateToProps = (state) => ({
 
 // export default Home;
 
-export default connect(mapStateToProps, { getFollowed })(Home);
+export default connect(mapStateToProps, { getFollowed, fetchUserQueues })(Home);

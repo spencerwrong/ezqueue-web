@@ -16,15 +16,8 @@ import { FiSearch } from "react-icons/fi";
 import { connect } from "react-redux";
 import CreateQueueModal from "./CreateQueueModal";
 import QueueCard from "./QueueCard";
-import { fetchUserQueues } from "../../actions/queueActions";
 
-const Queues = ({ userQueues, isAuthenticated, fetchUserQueues }) => {
-  useEffect(() => {
-    if (isAuthenticated) {
-      fetchUserQueues();
-    }
-  }, []);
-
+const Queues = ({ userQueues }) => {
   const queueCards = userQueues.map((queue) => (
     <QueueCard
       name={queue.name}
@@ -162,5 +155,4 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps, { fetchUserQueues })(Queues);
-// export default Queues;
+export default connect(mapStateToProps, null)(Queues);
