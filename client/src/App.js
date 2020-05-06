@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from "react";
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
-import { Security, SecureRoute, ImplicitCallback } from '@okta/okta-react';
-
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import { Security, SecureRoute, ImplicitCallback } from "@okta/okta-react";
 
 // components
 import Navbar from "./components/layout/Navbar";
@@ -13,6 +12,7 @@ import "./App.css";
 // jwt authentication
 import setAuthToken from "./utils/setAuthToken";
 import { loadUser } from "./actions/authActions";
+import { fetchUserQueues, getFollowed } from "./actions/queueActions";
 
 // Redux
 import { Provider } from "react-redux";
@@ -21,14 +21,13 @@ import store from "./store";
 if (localStorage.token) {
   setAuthToken(localStorage.token);
   store.dispatch(loadUser());
+  store.dispatch(fetchUserQueues());
+  store.dispatch(getFollowed());
 }
 
 class App extends Component {
   render() {
     return (
-
-
-
       <Provider store={store}>
         <Router>
           <Fragment>

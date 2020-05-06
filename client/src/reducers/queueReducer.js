@@ -8,6 +8,7 @@ import {
   FOLLOW_ERROR,
   FOLLOW_USER,
   GET_FOLLOWED_QUEUES,
+  UPDATE_QUEUE,
 } from "../actions/actionTypes";
 
 const intialState = {
@@ -65,6 +66,20 @@ export default function (state = intialState, action) {
       return {
         ...state,
         errors: payload,
+        loading: false,
+      };
+    case UPDATE_QUEUE:
+      return {
+        ...state,
+        followedQueues: state.followedQueues.map((queue) =>
+          queue.id === payload.id ? (queue = payload) : queue
+        ),
+        userQueues: state.userQueues.map((queue) =>
+          queue.id === payload.id ? (queue = payload) : queue
+        ),
+        queues: state.queues.map((queue) =>
+          queue.id === payload.id ? (queue = payload) : queue
+        ),
         loading: false,
       };
     default:

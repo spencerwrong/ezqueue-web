@@ -1,13 +1,12 @@
 import axios from "axios";
 import {
   CREATE_QUEUE,
+  UPDATE_QUEUE,
   START_QUEUE,
-  CREATE_START_QUEUE,
   END_QUEUE,
   GET_QUEUES,
   QUEUE_ERROR,
   FETCH_USER_QUEUES,
-  ADD_ACTIVE_QUEUE,
   JOIN_QUEUE,
   FOLLOW_USER,
   GET_FOLLOWED_QUEUES,
@@ -60,7 +59,21 @@ export const create = ({ name, description, location }) => async (dispatch) => {
 };
 
 // Update a Queue
-export const update = ({ queue }) => async (dispatch) => {};
+export const update = ({ queue }) => (dispatch) => {
+  try {
+    dispatch({
+      type: UPDATE_QUEUE,
+      payload: queue,
+    });
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    console.log(errors);
+    dispatch({
+      type: QUEUE_ERROR,
+    });
+  }
+};
 
 // Fetch logged in user's queues
 export const fetchUserQueues = () => async (dispatch) => {
