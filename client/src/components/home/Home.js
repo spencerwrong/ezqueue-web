@@ -1,20 +1,11 @@
 import React, { Fragment } from "react";
 import styled from "styled-components";
-import {
-  Card,
-  Button,
-  ProgressBar,
-  Container,
-  InputGroup,
-  FormControl,
-  Row,
-} from "react-bootstrap";
-import { FiSearch } from "react-icons/fi";
+import { Container } from "react-bootstrap";
 import ActiveCard from "../queue/ActiveCard";
 // import QueueCard from "../queue/QueueCard";
 import { fetchUserQueues } from "../../actions/queueActions";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
+import SearchBar from "../search/SearchBar";
 
 const Home = ({ fetchUserQueues, isAuthenticated }) => {
   if (isAuthenticated) {
@@ -27,39 +18,7 @@ const Home = ({ fetchUserQueues, isAuthenticated }) => {
       <PageTitle style={{ marginTop: "20px", marginBottom: "25px" }}>
         Home
       </PageTitle>
-
-      {/* Search Bar */}
-      <InputGroup
-        style={{
-          backgroundColor: "#EDEEF6",
-          marginBottom: "20px",
-          borderRadius: "10px 5px 5px 10px",
-        }}
-      >
-        <FormControl
-          placeholder="Search for queues or users..."
-          style={{
-            backgroundColor: "#EDEEF6",
-            border: 0,
-            height: "calc(1.6em + 1.875rem + 2px)",
-            paddingLeft: "20px",
-          }}
-        />
-        <InputGroup.Append>
-          <Button
-            style={{
-              paddingRight: "20px",
-              backgroundColor: "transparent",
-              border: "0",
-            }}
-          >
-            <div style={{ color: "#A6A8AE" }}>
-              <FiSearch size={20} />
-            </div>
-          </Button>
-        </InputGroup.Append>
-      </InputGroup>
-
+      <SearchBar />
       <SectionTitle>Active</SectionTitle>
       <ActiveCard />
       <SectionTitle style={{ marginTop: "20px", marginBottom: "20px" }}>

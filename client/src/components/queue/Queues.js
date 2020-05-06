@@ -72,7 +72,7 @@ const Queues = ({ userQueues }) => {
       <CreateQueueModal />
       <Container
         style={{
-          height: "500px",
+          height: "550px",
           overflowY: "scroll",
           width: "100%",
           padding: 0,

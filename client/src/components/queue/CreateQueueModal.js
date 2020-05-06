@@ -29,7 +29,6 @@ class CreateQueueModal extends Component {
           style={{
             background: "#EDEEF6",
             color: "black",
-            marginBottom: "20px",
             border: "0",
             fontSize: ".9375rem",
             height: "calc(1.6em + 1.875rem + 2px)",

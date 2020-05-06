@@ -24,11 +24,33 @@ const QueueCard = (props) => {
   useEffect(() => {
     socket.emit("isActive", queue);
     socket.on("active", (message) => {
-      if (message.id === queue.id && message.isActive === true) {
+      if (message.id === queue.id && message.isActive === true && isHost) {
         setActiveState(true);
         setButtonState({ text: "End", color: "danger" });
-      } else if (message.id === queue.id && message.isActive === false) {
+      } else if (
+        message.id === queue.id &&
+        message.isActive === false &&
+        isHost
+      ) {
         setButtonState({ text: "Start", color: "primary" });
+      } else if (
+        message.id === queue.id &&
+        message.isActive === true &&
+        isOccupant
+      ) {
+        setButtonState({ text: "Leave", color: "danger" });
+      } else if (
+        message.id === queue.id &&
+        message.isActive === true &&
+        !isOccupant
+      ) {
+        setButtonState({ text: "Join", color: "primary" });
+      } else if (
+        message.id === queue.id &&
+        message.isActive === false &&
+        !isOccupant
+      ) {
+        setButtonState({ text: "Inactive", color: "light" });
       }
     });
   }, []);
@@ -112,7 +134,7 @@ const QueueCard = (props) => {
     <div>
       <Card
         style={{
-          marginBottom: "20px",
+          marginTop: "20px",
           border: 0,
         }}
       >

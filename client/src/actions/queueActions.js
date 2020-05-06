@@ -79,3 +79,22 @@ export const fetchUserQueues = () => async (dispatch) => {
     });
   }
 };
+
+export const getQueues = () => async (dispatch) => {
+  try {
+    const res = await axios.get("/api/queue/");
+
+    dispatch({
+      type: GET_QUEUES,
+      payload: res.data,
+    });
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    console.log(errors);
+
+    dispatch({
+      type: QUEUE_ERROR,
+    });
+  }
+};

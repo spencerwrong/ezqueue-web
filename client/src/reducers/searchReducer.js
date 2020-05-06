@@ -1,49 +1,36 @@
 import {
-  CREATE_QUEUE,
-  START_QUEUE,
-  END_QUEUE,
-  GET_QUEUES,
-  QUEUE_ERROR,
-  FETCH_USER_QUEUES,
+  SEARCH_ERROR,
+  SEARCH_QUEUE,
+  SEARCH_USER,
 } from "../actions/actionTypes";
 
 const intialState = {
-  userQueues: [],
-  activeQueue: [],
-  savedQueues: [],
-  followedQueues: [],
   queues: [],
-  queue: null,
-  loading: true,
+  users: [],
   errors: {},
+  loading: true,
 };
 
 export default function (state = intialState, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case GET_QUEUES:
-      return {
-        ...state,
-        queues: payload,
-        loading: false,
-      };
-    case QUEUE_ERROR:
+    case SEARCH_ERROR:
       return {
         ...state,
         errors: payload,
         loading: false,
       };
-    case CREATE_QUEUE:
+    case SEARCH_QUEUE:
       return {
         ...state,
-        userQueues: [...state.userQueues, payload],
+        queues: payload,
         loading: false,
       };
-    case FETCH_USER_QUEUES:
+    case SEARCH_USER:
       return {
         ...state,
-        userQueues: payload,
+        users: payload,
         loading: false,
       };
     default:

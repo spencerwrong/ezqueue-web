@@ -67,4 +67,14 @@ router.get("/user", [auth], async (req, res) => {
   }
 });
 
+router.get("/", async (req, res) => {
+  try {
+    const queues = await Queue.findAll();
+    res.json(queues);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("server error");
+  }
+});
+
 module.exports = router;
