@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import {
   Tab,
   Tabs,
@@ -16,8 +16,15 @@ import { FiSearch } from "react-icons/fi";
 import { connect } from "react-redux";
 import CreateQueueModal from "./CreateQueueModal";
 import QueueCard from "./QueueCard";
+import { fetchUserQueues } from "../../actions/queueActions";
 
-const Queues = ({ userQueues }) => {
+const Queues = ({ userQueues, isAuthenticated, fetchUserQueues }) => {
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetchUserQueues();
+    }
+  }, []);
+
   const queueCards = userQueues.map((queue) => (
     <QueueCard
       name={queue.name}
@@ -152,7 +159,8 @@ const QueueNavItem = styled(Nav.Item)`
 
 const mapStateToProps = (state) => ({
   userQueues: state.queue.userQueues,
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps, null)(Queues);
+export default connect(mapStateToProps, { fetchUserQueues })(Queues);
 // export default Queues;

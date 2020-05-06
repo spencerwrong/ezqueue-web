@@ -5,6 +5,9 @@ import {
   GET_QUEUES,
   QUEUE_ERROR,
   FETCH_USER_QUEUES,
+  FOLLOW_ERROR,
+  FOLLOW_USER,
+  GET_FOLLOWED_QUEUES,
 } from "../actions/actionTypes";
 
 const intialState = {
@@ -44,6 +47,24 @@ export default function (state = intialState, action) {
       return {
         ...state,
         userQueues: payload,
+        loading: false,
+      };
+    case FOLLOW_USER:
+      return {
+        ...state,
+        followedQueues: [...state.followedQueues, ...payload],
+        loading: false,
+      };
+    case GET_FOLLOWED_QUEUES:
+      return {
+        ...state,
+        followedQueues: payload,
+        loading: false,
+      };
+    case FOLLOW_ERROR:
+      return {
+        ...state,
+        errors: payload,
         loading: false,
       };
     default:

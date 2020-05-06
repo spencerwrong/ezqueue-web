@@ -1,7 +1,14 @@
 import React from "react";
 import { Card, Button } from "react-bootstrap";
+import { connect } from "react-redux";
+import { follow } from "../../actions/queueActions";
+import PropTypes from "prop-types";
 
-const ProfileCard = (props) => {
+const ProfileCard = ({ follow, user }) => {
+  const click = () => {
+    follow(user.username);
+  };
+
   return (
     <Card style={{ marginTop: "20px", border: 0 }}>
       <Card.Body>
@@ -21,13 +28,18 @@ const ProfileCard = (props) => {
             />
             <div className="align-self-center">
               <h6 className="mb-0" style={{ paddingBottom: "6px" }}>
-                {props.user.fullname}
+                {user.fullname}
               </h6>
-              <small className="text-muted">{props.user.username}</small>
+              <small className="text-muted">{user.username}</small>
             </div>
           </div>
 
-          <Button variant="primary" size="sm" style={{ fontWeight: "bold" }}>
+          <Button
+            variant="primary"
+            size="sm"
+            style={{ fontWeight: "bold" }}
+            onClick={click}
+          >
             Follow
           </Button>
         </div>
@@ -36,4 +48,8 @@ const ProfileCard = (props) => {
   );
 };
 
-export default ProfileCard;
+ProfileCard.propTypes = {
+  follow: PropTypes.func.isRequired,
+};
+
+export default connect(null, { follow })(ProfileCard);

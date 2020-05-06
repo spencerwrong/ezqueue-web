@@ -9,8 +9,10 @@ import {
   FETCH_USER_QUEUES,
   ADD_ACTIVE_QUEUE,
   JOIN_QUEUE,
+  FOLLOW_USER,
+  GET_FOLLOWED_QUEUES,
+  FOLLOW_ERROR,
 } from "./actionTypes";
-import { Redirect } from "react-router-dom";
 
 // Get Queues
 export const getActive = () => async (dispatch) => {
@@ -86,6 +88,42 @@ export const getQueues = () => async (dispatch) => {
 
     dispatch({
       type: GET_QUEUES,
+      payload: res.data,
+    });
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    console.log(errors);
+
+    dispatch({
+      type: QUEUE_ERROR,
+    });
+  }
+};
+
+export const follow = (username) => async (dispatch) => {
+  try {
+    const res = await axios.post("/api/queue/follow", { username });
+    dispatch({
+      type: FOLLOW_USER,
+      payload: res.data,
+    });
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    console.log(errors);
+
+    dispatch({
+      type: FOLLOW_ERROR,
+    });
+  }
+};
+
+export const getFollowed = () => async (dispatch) => {
+  try {
+    const res = await axios.get("/api/queue/followed");
+    dispatch({
+      type: GET_FOLLOWED_QUEUES,
       payload: res.data,
     });
   } catch (err) {
