@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import {
   Tab,
   Tabs,
@@ -72,7 +72,7 @@ const Queues = ({ userQueues }) => {
       <CreateQueueModal />
       <Container
         style={{
-          height: "500px",
+          height: "550px",
           overflowY: "scroll",
           width: "100%",
           padding: 0,
@@ -152,7 +152,7 @@ const QueueNavItem = styled(Nav.Item)`
 
 const mapStateToProps = (state) => ({
   userQueues: state.queue.userQueues,
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
 export default connect(mapStateToProps, null)(Queues);
-// export default Queues;

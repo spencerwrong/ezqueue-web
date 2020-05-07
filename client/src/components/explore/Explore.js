@@ -5,6 +5,9 @@ import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import { Modal, Button } from "react-bootstrap";
 import MarkerModal from "./MarkerModal";
 import DummyQueue from "./DummyQueue";
+import { connect } from "react-redux";
+import { getQueues } from "../../actions/queueActions";
+import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 
 import { Security, SecureRoute, ImplicitCallback } from "@okta/okta-react";
 
@@ -17,7 +20,7 @@ const mapStyles = {
 export class MapContainer extends Component {
   constructor(props) {
     super(props);
-
+    this.props.getQueues();
     this.state = {
       queues: [
         { latitude: 37.3366067, longitude: -121.8832416 },
@@ -25,10 +28,12 @@ export class MapContainer extends Component {
         { latitude: 37.3346139, longitude: -121.8816275 },
         { latitude: 38.8977, longitude: -77.0365 },
       ],
+      // queues: this.props.queues,
       showModal: false,
     };
     this.open = this.open.bind(this);
     this.close = this.close.bind(this);
+    // console.log(this.state.queues);
   }
 
   close() {
@@ -40,14 +45,18 @@ export class MapContainer extends Component {
   }
 
   displayMarkers = () => {
-    return this.state.queues.map((store, index) => {
+    return this.state.queues.map((queue, key) => {
+      // console.log(queue);
+      // const results = await geocodeByAddress(queue.location);
+      // const coordinates = await getLatLng(results[0]);
+      // console.log(coordinates);
       return (
         <Marker
-          key={index}
-          id={index}
+          key={key}
+          id={key}
           position={{
-            lat: store.latitude,
-            lng: store.longitude,
+            lat: queue.latitude,
+            lng: queue.longitude,
           }}
           onClick={this.open}
         />
@@ -57,7 +66,7 @@ export class MapContainer extends Component {
 
   render() {
     return (
-      <div style={{ width: "100vw", height: "90vh" }}>
+      <div style={{ width: "100vw", height: "96vh" }}>
         {/* <div>
           <h1>Explore</h1> 
         </div>  */}
@@ -69,6 +78,7 @@ export class MapContainer extends Component {
             <Modal.Body>
               <h1>
                 <DummyQueue />
+                {/* {this.state.queue.name} */}
               </h1>
             </Modal.Body>
             <Modal.Footer>
@@ -82,8 +92,10 @@ export class MapContainer extends Component {
           <Map
             google={this.props.google}
             zoom={16}
-            style={mapStyles}
+            // style={mapStyles}
             initialCenter={{ lat: 37.334993, lng: -121.880996 }}
+            mapElement={{ height: "90%" }}
+            containerElement={{ height: "100px" }}
           >
             {this.displayMarkers()}
           </Map>
@@ -92,6 +104,17 @@ export class MapContainer extends Component {
     );
   }
 }
-export default GoogleApiWrapper({
-  apiKey: "AIzaSyCz5fH8IDQpcm1PU7aF-GQpAb2IuXfPcu0",
-})(MapContainer);
+
+const mapStateToProps = (state) => ({
+  queues: state.queue.queues,
+});
+
+// export default GoogleApiWrapper({
+//   apiKey: "AIzaSyCz5fH8IDQpcm1PU7aF-GQpAb2IuXfPcu0",
+// })(MapContainer);
+
+export default connect(mapStateToProps, { getQueues })(
+  GoogleApiWrapper({
+    apiKey: "AIzaSyCz5fH8IDQpcm1PU7aF-GQpAb2IuXfPcu0",
+  })(MapContainer)
+);

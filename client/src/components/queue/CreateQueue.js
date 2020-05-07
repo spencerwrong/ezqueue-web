@@ -1,6 +1,5 @@
 // import React, { Component } from "react";
-import React, { Fragment, useState, useEffect } from "react";
-import { Redirect } from "react-router-dom";
+import React, { Fragment, useState } from "react";
 import { connect } from "react-redux";
 import { create } from "../../actions/queueActions";
 import PropTypes from "prop-types";
@@ -13,7 +12,6 @@ import { GoogleApiWrapper } from "google-maps-react";
 const CreateQueue = ({ create }) => {
   const [formData, setFormData] = useState({
     name: "",
-    // location: "",
     description: "",
   });
   const [location, setLocation] = useState("");

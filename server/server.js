@@ -27,6 +27,7 @@ app.use(express.json({ extended: false }));
 app.use("/api/users", require("./routes/api/users"));
 app.use("/api/auth", require("./routes/api/auth"));
 app.use("/api/queue", require("./routes/api/queue"));
+app.use("/api/search", require("./routes/api/search"));
 
 const Queue = require("./models/Queue");
 const { QueryTypes } = require("sequelize");

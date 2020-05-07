@@ -20,3 +20,12 @@ export const QUEUE_ERROR = "QUEUE_ERROR";
 export const FETCH_USER_QUEUES = "FETCH_USER_QUEUES";
 export const ADD_ACTIVE_QUEUE = "ADD_ACTIVE_QUEUE";
 export const JOIN_QUEUE = "JOIN_QUEUE";
+export const FOLLOW_USER = "FOLLOW_USER";
+export const FOLLOW_ERROR = "FOLLOW_ERROR";
+export const GET_FOLLOWED_QUEUES = "GET_FOLLOWED_QUEUES";
+export const UPDATE_QUEUE = "UPDATE_QUEUE";
+
+// Search Actions
+export const SEARCH_QUEUE = "SEARCH_QUEUE";
+export const SEARCH_USER = "SEARCH_USER";
+export const SEARCH_ERROR = "SEARCH_ERROR";
